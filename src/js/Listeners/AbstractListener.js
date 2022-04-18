@@ -10,9 +10,8 @@ export class AbstractListener extends AbstractClass {
     /**
      * @abstract
      * @param {Event|CustomEvent} event
-     * @param {string} rootElementId
      */
-    handle(event, rootElementId) {
+    handle(event) {
         this._notImplemented('handle');
     }
 }
