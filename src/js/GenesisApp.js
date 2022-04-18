@@ -1,5 +1,5 @@
-const test = 'fef';
+import {Genesis as App} from 'Application/Genesis';
 
 export {
-    test
+    App
 };
