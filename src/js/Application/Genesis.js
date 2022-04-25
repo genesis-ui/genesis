@@ -5,6 +5,7 @@ import {ServiceProviderService} from "../Services/ServiceProviderService";
 import {OperationNotAllowedException} from "../Exceptions/OperationNotAllowedException";
 import {Bootstrapper} from "./Bootstrapper";
 import {createRoot} from "react-dom/client";
+import {Env} from "../Models/Env";
 
 export class Genesis {
     /** @type {string} **/
@@ -21,11 +22,20 @@ export class Genesis {
     /** @type {Container} **/
     #container;
 
+    /** @type {Env} **/
+    #env;
+
     /** @type {string} **/
     #rootElementId;
 
-    constructor() {
+    /**
+     * @param {{}} env
+     */
+    constructor(env) {
         this.#container = new Container();
+        this.#env = new Env(env);
+
+        this.bindInstance('app::env', this.#env);
     }
 
     /**
@@ -33,6 +43,14 @@ export class Genesis {
      */
     static getInstance() {
         return this.#instance;
+    }
+
+    /**
+     * @param {string} key
+     * @returns {string|number|boolean|null}
+     */
+    env(key) {
+        return this.#env.get(key);
     }
 
     /**
