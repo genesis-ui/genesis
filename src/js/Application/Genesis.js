@@ -136,7 +136,6 @@ export class Genesis {
      * @throws OperationNotAllowedException
      */
     init() {
-
         return new Promise(function (resolve, reject) {
             if (!this.#wasInitialized) {
                 this.#wasInitialized = true;
@@ -150,9 +149,11 @@ export class Genesis {
     }
 
     /**
+     * @param {string} elementId
      * @returns void
+     * @throws OperationNotAllowedException
      */
-    render(elementId) {
+    handle(elementId) {
         if (!this.#wasInitialized) {
             throw new OperationNotAllowedException('[GenesisUI] Builder must be initialized before rendering');
         }
@@ -164,9 +165,13 @@ export class Genesis {
         const root = createRoot(document.getElementById(elementId));
 
         /**
-         * @todo Implement routing
+         * @type {Router}
          */
-        root.render();
+        const router = this.make('app::router');
+
+        const request = router.routeUrl(window.location.href);
+
+        root.render(this.make('app::view-kernel').handle(request).getComponent());
 
         document.dispatchEvent(new Event('gui.done'));
     }

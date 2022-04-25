@@ -21,6 +21,8 @@ const Abstract = {
     Enum: Enum,
     ServiceProvider: AbstractServiceProvider,
     Listener: AbstractListener,
+    Controller: AbstractController,
+    Middleware: AbstractMiddleware,
 };
 
 const Model = {
@@ -39,11 +41,18 @@ const Exception = {
     RuntimeException: RuntimeException,
 }
 
+function get() {
+    return Genesis.getInstance();
+}
+
 export {
     App,
     Abstract,
     Model,
     Resolvable,
     Compliance,
-    Exception
+    Exception,
+    Router,
+    ExampleServiceProvider,
+    get
 };
