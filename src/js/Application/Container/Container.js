@@ -2,10 +2,17 @@ import {BindingException} from "../../Exceptions/BindingException";
 import {BindingResolutionException} from "../../Exceptions/BindingResolutionException";
 
 export class Container {
+    /** @type {Object.<number, *>} **/
     static #boundInstances = {};
+    /** @type {Object.<number, *>} **/
     static #boundSingletons = {};
+    /** @type {Object.<number, *>} **/
     static #bound = {};
 
+    /**
+     * @param {string} name
+     * @returns {Container}
+     */
     clear(name) {
         if (Container.#bound[name]) {
             delete Container.#bound[name];
@@ -22,6 +29,12 @@ export class Container {
         return this;
     }
 
+    /**
+     * @param {string} name
+     * @param {Genesis} app
+     * @param {string[]} parameters
+     * @returns {*}
+     */
     resolve(name, app, parameters = []) {
         if (Container.#bound[name]) {
             return Container.#bound[name](app, ...parameters);
@@ -44,6 +57,11 @@ export class Container {
         throw new BindingResolutionException('[GenesisUI] Could not resolve a bindable or instance from "' + name + '"');
     }
 
+    /**
+     * @param {string} name
+     * @param {*} bindable
+     * @returns {Container}
+     */
     bind(name, bindable) {
         if (typeof bindable !== 'function') {
             throw new BindingException('[GenesisUI] Could not bind: Bindable must be wrapped by a "function"', name);
@@ -56,6 +74,11 @@ export class Container {
         return this;
     }
 
+    /**
+     * @param {string} name
+     * @param {*} bindable
+     * @returns {Container}
+     */
     bindSingleton(name, bindable) {
         if (typeof bindable !== 'function') {
             throw new BindingException('[GenesisUI] Could not bind singleton: Bindable must be wrapped by a "function"', name);
@@ -68,6 +91,11 @@ export class Container {
         return this;
     }
 
+    /**
+     * @param {string} name
+     * @param {*} instance
+     * @returns {Container}
+     */
     bindInstance(name, instance) {
         this.clear(name);
 

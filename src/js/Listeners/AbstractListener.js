@@ -10,6 +10,7 @@ export class AbstractListener extends AbstractClass {
     /**
      * @abstract
      * @param {Event|CustomEvent} event
+     * @returns void
      */
     handle(event) {
         this._notImplemented('handle');

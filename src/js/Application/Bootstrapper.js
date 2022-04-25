@@ -7,14 +7,24 @@ export class Bootstrapper {
     /** @type {AbstractServiceProvider[]}**/
     #providerInstances = [];
 
+    /**
+     * @param {Genesis} app
+     */
     constructor(app) {
         this.#app = app;
     }
 
+    /**
+     * @type {AbstractServiceProvider[]}
+     */
     #baseProviders = [
          TranslationServiceProvider
     ];
 
+    /**
+     * @param {AbstractServiceProvider[]} providers
+     * @returns {number}
+     */
     #providersBoot(providers) {
         let providerCount = 0;
 
@@ -32,6 +42,9 @@ export class Bootstrapper {
         return providerCount;
     }
 
+    /**
+     * @returns void
+     */
     #providersRegister() {
         for (const providerInstance of this.#providerInstances) {
 

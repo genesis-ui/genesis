@@ -39,6 +39,7 @@ export class AbstractServiceProvider extends AbstractClass {
      * @param {string} event
      * @param {Class<AbstractListener>} listener
      * @param {boolean} registerAsGlobal
+     * @returns this
      */
     addListener(event, listener, registerAsGlobal = false) {
 

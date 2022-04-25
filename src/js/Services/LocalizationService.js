@@ -52,6 +52,11 @@ export class LocalizationService {
         }
     }
 
+    /**
+     * @param {LocaleType} localeType
+     * @param {?string} defaultLocale
+     * @returns {string|null}
+     */
     getLocale(localeType, defaultLocale = null) {
         switch (localeType) {
             case LocaleType.DATE:

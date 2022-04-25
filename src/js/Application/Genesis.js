@@ -38,7 +38,7 @@ export class Genesis {
     /**
      * @returns {string}
      */
-    getRootElementId(){
+    getRootElementId() {
         return this.#rootElementId;
     }
 

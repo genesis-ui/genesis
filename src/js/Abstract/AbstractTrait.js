@@ -10,7 +10,6 @@ export class AbstractTrait extends AbstractClass {
     _staticObject;
 
     /**
-     *
      * @param {Class} staticObject
      */
     constructor(staticObject) {
