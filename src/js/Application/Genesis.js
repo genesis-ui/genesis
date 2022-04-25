@@ -80,18 +80,7 @@ export class Genesis {
             serviceProviders = [serviceProviders];
         }
 
-        let validProviders = [];
-
-        for (const serviceProvider of serviceProviders) {
-            if (serviceProvider instanceof AbstractServiceProvider) {
-                validProviders.push(serviceProvider);
-                continue;
-            }
-
-            throw new RuntimeException('[GenesisUI] Invalid service-provider');
-        }
-
-        serviceProviderService.register(validProviders);
+        serviceProviderService.register(serviceProviders);
     }
 
     /**
@@ -124,11 +113,12 @@ export class Genesis {
     /**
      *
      * @param {string} boundName
+     * @param {*[]} parameters
      * @returns {Object|function|*}
      * @throws BindingResolutionException
      */
-    make(boundName) {
-        return this.#container.resolve(boundName, this);
+    make(boundName, parameters = []) {
+        return this.#container.resolve(boundName, this, parameters);
     }
 
     /**

@@ -47,7 +47,7 @@ export class Container {
 
             this.bindInstance(name, instance);
 
-            return this.resolve(name);
+            return this.resolve(name, app);
         }
 
         if (Container.#boundInstances[name]) {
