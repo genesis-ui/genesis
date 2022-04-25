@@ -1,5 +1,6 @@
 import {AbstractClass} from "../Abstract/AbstractClass";
 import {TranslationService} from "../Services/TranslationService";
+import {RouteService} from "../Services/RouteService";
 
 const namespace = 'GenesisUI::Providers';
 
@@ -45,9 +46,9 @@ export class AbstractServiceProvider extends AbstractClass {
 
         document.addEventListener('gui.done', (doneEvent) => {
 
-                document.addEventListener(event, (originalEvent) => {
-                    new listener().handle(originalEvent);
-                })
+            document.addEventListener(event, (originalEvent) => {
+                new listener().handle(originalEvent);
+            })
         });
 
         return this;
@@ -56,6 +57,7 @@ export class AbstractServiceProvider extends AbstractClass {
     /**
      * @param {Object.<group.<string>, Object.<key.<string>, value.<string>>>} translations
      * @param {string} locale
+     * @returns this
      */
     addTranslations(translations, locale) {
         const translationService = new TranslationService();
@@ -65,5 +67,29 @@ export class AbstractServiceProvider extends AbstractClass {
                 translationService.add(locale, group, key, value);
             }
         }
+
+        return this;
+    }
+
+    /**
+     * @param {callback} routes
+     * @returns this
+     */
+    loadRoutes(routes) {
+        const routeService = new RouteService();
+
+        routeService.registerCallback(routes);
+
+        return this;
+    }
+
+    /**
+     * @param {string|function} middleware
+     * @returns this
+     */
+    attachGlobalMiddleware(middleware) {
+        this._app.make('app::view-kernel').attachGlobalMiddleware(middleware);
+
+        return this;
     }
 }
