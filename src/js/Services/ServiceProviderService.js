@@ -7,8 +7,6 @@ import {RuntimeException} from "../Exceptions/RuntimeException";
 export class ServiceProviderService {
     /** @type {AbstractServiceProvider[]} **/
     static #serviceProviders = [];
-    /** @type {string[]} **/
-    static #dynamicProvidersUrls = [];
 
     /**
      * @param {AbstractServiceProvider|AbstractServiceProvider[]} serviceProviders
@@ -20,7 +18,14 @@ export class ServiceProviderService {
         }
 
         for (const serviceProvider of serviceProviders) {
-            if (!(serviceProvider instanceof AbstractServiceProvider)) {
+            let serviceProviderInstance;
+
+            try {
+                serviceProviderInstance = new serviceProvider();
+                if (!(serviceProviderInstance instanceof AbstractServiceProvider)) {
+                    throw new Error();
+                }
+            } catch (exception) {
                 throw new RuntimeException('[GenesisUI] Service-Provider must be an instance of "AbstractServiceProvider"');
             }
 
@@ -33,12 +38,5 @@ export class ServiceProviderService {
      */
     get() {
         return ServiceProviderService.#serviceProviders;
-    }
-
-    /**
-     * @returns {string[]}
-     */
-    getDynamicProvidersUrls() {
-        return ServiceProviderService.#dynamicProvidersUrls;
     }
 }

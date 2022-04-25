@@ -22,8 +22,6 @@ module.exports = (env) => {
         externals: {
             'react': 'React',
             'react-dom': 'ReactDOM',
-            'axios': 'axios',
-            'react-router-dom': 'ReactRouterDOM'
         },
         resolve: {
             extensions: ['.js']

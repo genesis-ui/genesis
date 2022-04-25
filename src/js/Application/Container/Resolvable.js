@@ -1,7 +1,9 @@
 import {BindingResolutionException} from "../../Exceptions/BindingResolutionException";
 
 export class Resolvable {
+    /** @type {string|Class|function|CallableFunction} **/
     #bindableNameOrClassOrFunction;
+    /** @type {string[]} **/
     #parameterNames;
 
     /**
@@ -15,7 +17,10 @@ export class Resolvable {
 
     /**
      * @param {Genesis} app
-     * @param {Object.<string, *>} parameters
+     * @param {Object.<string, *>}  parameters
+     * @returns {*}
+     * @throws BindingResolutionException
+     * @throws Error
      */
     make(app, parameters = {}) {
         let instance;

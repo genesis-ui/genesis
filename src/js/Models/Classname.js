@@ -1,10 +1,17 @@
 export class Classname {
+    /** @type {(string|null)[]} **/
     #classnameItems;
 
+    /**
+     * @param {(string|null)[]} classnameItems
+     */
     constructor(classnameItems) {
         this.#classnameItems = classnameItems;
     }
 
+    /**
+     * @returns {string}
+     */
     combine() {
         let classnames = '';
 

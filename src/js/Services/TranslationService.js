@@ -1,6 +1,14 @@
 export class TranslationService {
+    /** @type {{}} **/
     static #translations = {};
 
+    /**
+     * @param {string} locale
+     * @param {string} group
+     * @param {string} key
+     * @param {string} value
+     * @returns {TranslationService}
+     */
     add(locale, group, key, value) {
         this.#ensureObjectsExist(locale, group);
 
@@ -9,6 +17,11 @@ export class TranslationService {
         return this;
     }
 
+    /**
+     * @param {string} locale
+     * @param {string} group
+     * @returns void
+     */
     #ensureObjectsExist(locale, group) {
         if (!TranslationService.#translations?.[locale]) {
             TranslationService.#translations[locale] = {};
@@ -19,10 +32,21 @@ export class TranslationService {
         }
     }
 
+    /**
+     * @param {string} locale
+     * @param {string} group
+     * @param {string} key
+     * @returns {string}
+     */
     trans(locale, group, key) {
         return TranslationService.#translations?.[locale]?.[group]?.[key] ?? group + '::' + key;
     }
 
+    /**
+     * @param {string} query
+     * @param {string} locale
+     * @returns {?string}
+     */
     search(query, locale) {
         const queryParts = query.split('::');
 

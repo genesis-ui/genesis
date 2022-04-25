@@ -30,6 +30,12 @@ export class AbstractClass {
         );
     }
 
+    /**
+     * @param method
+     * @param baseClass
+     * @static
+     * @private
+     */
     static _notImplemented(method, baseClass) {
         new this()._notImplemented(method, baseClass);
     }

@@ -5,6 +5,7 @@ import {ServiceProviderService} from "../Services/ServiceProviderService";
 import {OperationNotAllowedException} from "../Exceptions/OperationNotAllowedException";
 import {Bootstrapper} from "./Bootstrapper";
 import {createRoot} from "react-dom/client";
+import {Env} from "../Models/Env";
 
 export class Genesis {
     /** @type {string} **/
@@ -21,11 +22,20 @@ export class Genesis {
     /** @type {Container} **/
     #container;
 
+    /** @type {Env} **/
+    #env;
+
     /** @type {string} **/
     #rootElementId;
 
-    constructor() {
+    /**
+     * @param {{}} env
+     */
+    constructor(env) {
         this.#container = new Container();
+        this.#env = new Env(env);
+
+        this.bindInstance('app::env', this.#env);
     }
 
     /**
@@ -36,9 +46,17 @@ export class Genesis {
     }
 
     /**
+     * @param {string} key
+     * @returns {string|number|boolean|null}
+     */
+    env(key) {
+        return this.#env.get(key);
+    }
+
+    /**
      * @returns {string}
      */
-    getRootElementId(){
+    getRootElementId() {
         return this.#rootElementId;
     }
 
@@ -62,18 +80,7 @@ export class Genesis {
             serviceProviders = [serviceProviders];
         }
 
-        let validProviders = [];
-
-        for (const serviceProvider of serviceProviders) {
-            if (serviceProvider instanceof AbstractServiceProvider) {
-                validProviders.push(serviceProvider);
-                continue;
-            }
-
-            throw new RuntimeException('[GenesisUI] Invalid service-provider');
-        }
-
-        serviceProviderService.register(validProviders);
+        serviceProviderService.register(serviceProviders);
     }
 
     /**
@@ -106,11 +113,12 @@ export class Genesis {
     /**
      *
      * @param {string} boundName
+     * @param {*[]} parameters
      * @returns {Object|function|*}
      * @throws BindingResolutionException
      */
-    make(boundName) {
-        return this.#container.resolve(boundName, this);
+    make(boundName, parameters = []) {
+        return this.#container.resolve(boundName, this, parameters);
     }
 
     /**
@@ -118,7 +126,6 @@ export class Genesis {
      * @throws OperationNotAllowedException
      */
     init() {
-
         return new Promise(function (resolve, reject) {
             if (!this.#wasInitialized) {
                 this.#wasInitialized = true;
@@ -132,9 +139,11 @@ export class Genesis {
     }
 
     /**
+     * @param {string} elementId
      * @returns void
+     * @throws OperationNotAllowedException
      */
-    render(elementId) {
+    handle(elementId) {
         if (!this.#wasInitialized) {
             throw new OperationNotAllowedException('[GenesisUI] Builder must be initialized before rendering');
         }
@@ -146,9 +155,13 @@ export class Genesis {
         const root = createRoot(document.getElementById(elementId));
 
         /**
-         * @todo Implement routing
+         * @type {Router}
          */
-        root.render();
+        const router = this.make('app::router');
+
+        const request = router.routeUrl(window.location.href);
+
+        root.render(this.make('app::view-kernel').handle(request).getComponent());
 
         document.dispatchEvent(new Event('gui.done'));
     }
