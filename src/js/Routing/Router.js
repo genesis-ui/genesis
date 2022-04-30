@@ -1,6 +1,6 @@
 import {OperationNotAllowedException} from "../Exceptions/OperationNotAllowedException";
 import {RouteNotFoundException} from "../Exceptions/RouteNotFoundException";
-import {match} from "path-to-regexp";
+import {compile, match} from "path-to-regexp";
 import {Route} from "./Route";
 import {Request} from "./Request";
 import {Genesis} from "../Application/Genesis";
@@ -74,6 +74,22 @@ export class Router {
         }
 
         return null;
+    }
+
+    toRoute(name, parameters = {}) {
+        const routes = this.#routes.filter((item) => {
+            return (item?.name && item.name === name);
+        });
+
+        const route = routes.length > 0 ? routes[0] : null;
+
+        if (!route) {
+            return null;
+        }
+
+        const toPath = compile(route.path, {encode: encodeURIComponent});
+
+        return toPath(parameters);
     }
 
     /**
