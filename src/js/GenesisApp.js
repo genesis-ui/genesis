@@ -19,6 +19,7 @@ import {ExampleServiceProvider} from "./Providers/ExampleServiceProvider";
 import {AbstractMiddleware} from "./Routing/Middleware/AbstractMiddleware";
 import {TranslationService} from "./Services/TranslationService";
 import {Goto} from "./Routing/Goto";
+import {Response} from "./View/Responses/Response";
 
 const Abstract = {
     Class: AbstractClass,
@@ -66,5 +67,6 @@ export {
     ExampleServiceProvider,
     get,
     Goto,
-    Service
+    Service,
+    Response
 };
