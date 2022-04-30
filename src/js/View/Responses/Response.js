@@ -1,16 +1,18 @@
+import {ReactElement} from "react";
+
 export class Response {
-    /** @type {React.Component} **/
+    /** @type {React.Component|ReactElement} **/
     #component;
 
     /**
-     * @param {React.Component} component
+     * @param {React.Component|ReactElement} component
      */
     constructor(component) {
         this.#component = component;
     }
 
     /**
-     * @returns {React.Component}
+     * @returns {React.Component|ReactElement}
      */
     getComponent() {
         return this.#component;

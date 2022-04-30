@@ -56,4 +56,15 @@ export class Route {
     getName() {
         return this.#name;
     }
+
+    /**
+     * @returns {module:url.URL}
+     */
+    toURL() {
+        const url = new URL(window.location.href);
+
+        url.pathname = this.getPath();
+
+        return url;
+    }
 }

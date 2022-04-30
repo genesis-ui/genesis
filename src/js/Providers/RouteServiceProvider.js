@@ -1,6 +1,7 @@
 import {AbstractServiceProvider} from "./AbstractServiceProvider";
 import {Router} from "../Routing/Router";
 import {Kernel} from "../View/Kernel";
+import {UpdateHistory} from "../Routing/Middleware/UpdateHistory";
 
 export class RouteServiceProvider extends AbstractServiceProvider {
 
@@ -9,7 +10,7 @@ export class RouteServiceProvider extends AbstractServiceProvider {
             return new Router();
         });
 
-        this._app.bindInstance('app::view-kernel', new Kernel());
+        this._app.bindInstance('app::view-kernel', new Kernel([UpdateHistory]));
     }
 
     register() {

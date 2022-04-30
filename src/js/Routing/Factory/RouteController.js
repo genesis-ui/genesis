@@ -8,6 +8,8 @@ export class RouteController {
     #only;
     /** @type {?Object.<string, string>} **/
     #mappedRoutes = null;
+    /** @type {?string} **/
+    #name;
 
     /**
      * @param {AbstractMiddleware|string|(AbstractMiddleware|string)[]} middleware
@@ -20,6 +22,7 @@ export class RouteController {
         this.#prefix = prefix;
         this.#only = only;
         this.#controller = controller;
+        this.#name = null;
     }
 
     /**
@@ -65,6 +68,13 @@ export class RouteController {
     }
 
     /**
+     * @param {string} name
+     */
+    name(name) {
+        this.#name = name;
+    }
+
+    /**
      * @returns {*[]}
      */
     build() {
@@ -81,6 +91,7 @@ export class RouteController {
                     path: prefix + path,
                     middleware: middleware,
                     action: [this.#controller, method],
+                    name: this.#name ? this.#name + '.' + method : null,
                 });
             }
         }

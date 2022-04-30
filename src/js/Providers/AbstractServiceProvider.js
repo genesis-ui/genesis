@@ -39,16 +39,14 @@ export class AbstractServiceProvider extends AbstractClass {
     /**
      * @param {string} event
      * @param {Class<AbstractListener>} listener
-     * @param {boolean} registerAsGlobal
      * @returns this
      */
-    addListener(event, listener, registerAsGlobal = false) {
+    addListener(event, listener) {
 
-        document.addEventListener('gui.done', (doneEvent) => {
-
-            document.addEventListener(event, (originalEvent) => {
+        document.addEventListener('gui.done', () => {
+            addEventListener(event, (originalEvent) => {
                 new listener().handle(originalEvent);
-            })
+            });
         });
 
         return this;

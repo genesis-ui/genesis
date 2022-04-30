@@ -54,7 +54,6 @@ export class Kernel {
 
         const middlewareArray = this.#globalMiddleware.concat(this.#requestMiddleware);
 
-        let i = 0;
         const middlewareCount = middlewareArray.length;
 
         let action = request.route().getAction();
@@ -73,21 +72,20 @@ export class Kernel {
             return action(request);
         }
 
+        let i = 0;
+
         for (const middlewareStaticOrString of middlewareArray) {
             if (!(request instanceof Request)) {
                 throw new RuntimeException('[GenesisUI] Middleware may only return instances of "Request"');
             }
 
             const middleware = this.#buildMiddleware(middlewareStaticOrString, router);
-            let next;
 
-            if (i < middlewareCount) {
-                next = middlewareArray[i + 1].handle;
-            } else {
-                next = action;
+            if (i < (middlewareCount - 1)) {
+                action = middlewareArray[i].handle;
             }
 
-            request = this.#runMiddleware(middleware, next, request);
+            request = this.#runMiddleware(middleware, action, request);
 
             if (request instanceof Response) {
                 return request;

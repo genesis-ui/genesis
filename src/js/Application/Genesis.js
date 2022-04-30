@@ -6,6 +6,7 @@ import {OperationNotAllowedException} from "../Exceptions/OperationNotAllowedExc
 import {Bootstrapper} from "./Bootstrapper";
 import {createRoot} from "react-dom/client";
 import {Env} from "../Models/Env";
+import {Renderer} from "../View/Renderer";
 
 export class Genesis {
     /** @type {string} **/
@@ -152,16 +153,18 @@ export class Genesis {
 
         Genesis.#instance = this;
 
-        const root = createRoot(document.getElementById(elementId));
-
         /**
          * @type {Router}
          */
         const router = this.make('app::router');
 
-        const request = router.routeUrl(window.location.href);
+        const root = createRoot(document.getElementById(elementId));
 
-        root.render(this.make('app::view-kernel').handle(request).getComponent());
+        const renderer = new Renderer(root);
+
+        this.bindInstance('app::renderer', renderer);
+
+        renderer.render(router.routeUrl(window.location.href));
 
         document.dispatchEvent(new Event('gui.done'));
     }

@@ -17,6 +17,8 @@ import {Router} from "./Routing/Router";
 import {AbstractController} from "./View/Controllers/AbstractController";
 import {ExampleServiceProvider} from "./Providers/ExampleServiceProvider";
 import {AbstractMiddleware} from "./Routing/Middleware/AbstractMiddleware";
+import {TranslationService} from "./Services/TranslationService";
+import {Goto} from "./Routing/Goto";
 
 const Abstract = {
     Class: AbstractClass,
@@ -27,6 +29,10 @@ const Abstract = {
     Listener: AbstractListener,
     Controller: AbstractController,
     Middleware: AbstractMiddleware,
+};
+
+const Service = {
+    Translation: TranslationService,
 };
 
 const Model = {
@@ -58,5 +64,7 @@ export {
     Exception,
     Router,
     ExampleServiceProvider,
-    get
+    get,
+    Goto,
+    Service
 };

@@ -11,6 +11,7 @@ export class AbstractMiddleware extends AbstractClass {
      * @param {Request} request
      * @param {function} next
      * @returns {Request|Response}
+     * @abstract
      */
     handle(request, next) {
         this._notImplemented('handle');

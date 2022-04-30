@@ -7,6 +7,8 @@ export class RouteFactory {
     #action = null;
     /** @type {number} **/
     #id;
+    /** @type {?string} **/
+    #name;
 
     /**
      * @param {number} id
@@ -17,6 +19,7 @@ export class RouteFactory {
         this.#id = id;
         this.#route = route;
         this.#action = action;
+        this.#name = null;
     }
 
     /**
@@ -56,6 +59,13 @@ export class RouteFactory {
     }
 
     /**
+     * @param {string} name
+     */
+    name(name) {
+        this.#name = name;
+    }
+
+    /**
      * @returns {{path: ?string, action: (Array|Function), middleware: (string|AbstractMiddleware)[]}}
      */
     build() {
@@ -63,6 +73,7 @@ export class RouteFactory {
             path: this.#route,
             action: this.#action,
             middleware: this.#middleware,
+            name: this.#name,
         };
     }
 }

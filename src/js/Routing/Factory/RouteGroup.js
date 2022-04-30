@@ -76,6 +76,7 @@ export class RouteGroup {
                 path: prefix + groupRoute.path,
                 middleware: middleware.concat(groupRoute.middleware),
                 action: groupRoute.action,
+                name: groupRoute?.name ?? null,
             });
         }
 
