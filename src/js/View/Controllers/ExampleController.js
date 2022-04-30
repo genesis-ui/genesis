@@ -5,7 +5,8 @@ import {Response} from "../Responses/Response";
 export class ExampleController extends AbstractController {
     static mapRoutes() {
         return {
-            'welcome': 'welcome'
+            'welcome': 'welcome',
+            'tests': 'tests'
         };
     }
 
@@ -15,5 +16,17 @@ export class ExampleController extends AbstractController {
      */
     welcome(request) {
         return new Response(<Welcome/>);
+    }
+
+    /**
+     * @param {Request} request
+     * @returns {Response}
+     */
+    tests(request) {
+        return new Response(
+            <div>
+                <a href="#" onClick={() => Genesis.Goto.route('example')}>Click</a>
+            </div>
+        );
     }
 }
