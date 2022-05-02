@@ -9,6 +9,8 @@ export class RouteFactory {
     #id;
     /** @type {?string} **/
     #name;
+    /** @type {?string[]} **/
+    #domain;
 
     /**
      * @param {number} id
@@ -20,6 +22,7 @@ export class RouteFactory {
         this.#route = route;
         this.#action = action;
         this.#name = null;
+        this.#domain = null;
     }
 
     /**
@@ -60,9 +63,28 @@ export class RouteFactory {
 
     /**
      * @param {string} name
+     * @returns {RouteFactory}
      */
     name(name) {
         this.#name = name;
+
+        return this;
+    }
+
+    /**
+     * @param {string|string[]} domain
+     * @returns {RouteFactory}
+     */
+    domain(domain) {
+        if (!Array.isArray(domain)) {
+            this.#domain = [domain];
+
+            return this;
+        }
+
+        this.#domain = domain;
+
+        return this;
     }
 
     /**
@@ -74,6 +96,7 @@ export class RouteFactory {
             action: this.#action,
             middleware: this.#middleware,
             name: this.#name,
+            domain: this.#domain,
         };
     }
 }

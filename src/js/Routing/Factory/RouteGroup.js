@@ -8,6 +8,8 @@ export class RouteGroup {
     #prefix;
     /** @type {?function} **/
     #callback;
+    /** @type {?string[]} **/
+    #domain;
 
     /**
      * @param {AbstractMiddleware|string|(AbstractMiddleware|string)[]} middleware
@@ -18,11 +20,12 @@ export class RouteGroup {
         this.#middleware = middleware;
         this.#prefix = prefix;
         this.#callback = callback;
+        this.#domain = null;
     }
 
     /**
      * @param {AbstractMiddleware|string|(AbstractMiddleware|string)[]} middleware
-     * @returns void
+     * @returns {RouteGroup}
      */
     middleware(middleware) {
         if (!Array.isArray(middleware)) {
@@ -30,6 +33,8 @@ export class RouteGroup {
         }
 
         this.#middleware = this.#middleware.concat(middleware);
+
+        return this;
     }
 
     /**
@@ -48,6 +53,22 @@ export class RouteGroup {
      */
     group(callback) {
         this.#callback = callback;
+    }
+
+    /**
+     * @param {string|string[]} domain
+     * @returns {RouteGroup}
+     */
+    domain(domain) {
+        if (!Array.isArray(domain)) {
+            this.#domain = [domain];
+
+            return this;
+        }
+
+        this.#domain = domain;
+
+        return this;
     }
 
     /**
@@ -77,6 +98,7 @@ export class RouteGroup {
                 middleware: middleware.concat(groupRoute.middleware),
                 action: groupRoute.action,
                 name: groupRoute?.name ?? null,
+                domain: this.#domain ?? groupRoute?.domain
             });
         }
 
