@@ -66,7 +66,8 @@ module.exports = (env) => {
             historyApiFallback: true,
             devMiddleware: {
                 writeToDisk: true
-            }
+            },
+            allowedHosts: 'all',
         };
 
         exports.plugins.push(new HtmlWebpackPlugin({

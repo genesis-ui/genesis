@@ -10,6 +10,8 @@ export class RouteController {
     #mappedRoutes = null;
     /** @type {?string} **/
     #name;
+    /** @type {?string[]} **/
+    #domain;
 
     /**
      * @param {AbstractMiddleware|string|(AbstractMiddleware|string)[]} middleware
@@ -23,11 +25,12 @@ export class RouteController {
         this.#only = only;
         this.#controller = controller;
         this.#name = null;
+        this.#domain = null;
     }
 
     /**
      * @param {AbstractMiddleware|string|(AbstractMiddleware|string)[]} middleware
-     * @returns void
+     * @returns {RouteController}
      */
     middleware(middleware) {
         if (!Array.isArray(middleware)) {
@@ -35,6 +38,8 @@ export class RouteController {
         }
 
         this.#middleware = this.#middleware.concat(middleware);
+
+        return this;
     }
 
     /**
@@ -69,9 +74,28 @@ export class RouteController {
 
     /**
      * @param {string} name
+     * @returns {RouteController}
      */
     name(name) {
         this.#name = name;
+
+        return this;
+    }
+
+    /**
+     * @param {string|string[]} domain
+     * @returns {RouteController}
+     */
+    domain(domain) {
+        if (!Array.isArray(domain)) {
+            this.#domain = [domain];
+
+            return this;
+        }
+
+        this.#domain = domain;
+
+        return this;
     }
 
     /**
@@ -92,6 +116,7 @@ export class RouteController {
                     middleware: middleware,
                     action: [this.#controller, method],
                     name: this.#name ? this.#name + '.' + method : null,
+                    domain: this.#domain,
                 });
             }
         }

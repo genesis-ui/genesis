@@ -10,7 +10,7 @@ export class Router {
     #middleware = {};
     /** @type {Object.<string, string>} **/
     #middlewareAliases = {};
-    /** @type {?Array.<{path: string,middleware: Array,action:function|Array}>} **/
+    /** @type {?Array.<{path: string,middleware: Array,action:function|Array,name:?string,domain:?string[]}>} **/
     #routes = null;
 
     /**
@@ -65,7 +65,7 @@ export class Router {
 
             const params = matchFn(path);
 
-            if (params !== false) {
+            if (params !== false && (!routeObj.domain || routeObj.domain.includes(window.location.hostname))) {
                 return {
                     route: new Route(path, routeObj.action, params.params, routeObj?.name),
                     middleware: routeObj.middleware
