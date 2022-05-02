@@ -30,7 +30,7 @@ export class Genesis {
     #rootElementId;
 
     /**
-     * @param {{}} env
+     * @param {Object.<string, string|number|boolean>} env
      */
     constructor(env) {
         this.#container = new Container();
@@ -131,7 +131,10 @@ export class Genesis {
             if (!this.#wasInitialized) {
                 this.#wasInitialized = true;
 
+                Genesis.#instance = this;
+
                 resolve(new Bootstrapper(this).bootstrap());
+                
                 return;
             }
 
@@ -150,8 +153,6 @@ export class Genesis {
         }
 
         this.#rootElementId = elementId;
-
-        Genesis.#instance = this;
 
         /**
          * @type {Router}
