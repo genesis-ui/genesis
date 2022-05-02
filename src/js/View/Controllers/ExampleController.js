@@ -6,7 +6,8 @@ export class ExampleController extends AbstractController {
     static mapRoutes() {
         return {
             'welcome': 'welcome',
-            'tests': 'tests'
+            'tests': 'tests',
+            'subdomain': 'subdomain'
         };
     }
 
@@ -26,6 +27,18 @@ export class ExampleController extends AbstractController {
         return new Response(
             <div>
                 <a href="#" onClick={() => Genesis.Goto.route('example')}>Click</a>
+            </div>
+        );
+    }
+
+    /**
+     * @param {Request} request
+     * @returns {Response}
+     */
+    subdomain(request) {
+        return new Response(
+            <div>
+                This route only works on the 'test.latus.local' subdomain
             </div>
         );
     }
