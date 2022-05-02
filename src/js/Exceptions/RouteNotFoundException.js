@@ -1,4 +1,6 @@
-export class RouteNotFoundException extends Error {
+import {AbstractException} from "./AbstractException";
+
+export class RouteNotFoundException extends AbstractException {
     name = 'RouteNotFoundException';
     path;
 
@@ -6,5 +8,9 @@ export class RouteNotFoundException extends Error {
         super(message);
 
         this.path = path;
+    }
+
+    getName() {
+        return this.name;
     }
 }

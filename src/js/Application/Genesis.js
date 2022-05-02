@@ -7,6 +7,8 @@ import {Bootstrapper} from "./Bootstrapper";
 import {createRoot} from "react-dom/client";
 import {Env} from "../Models/Env";
 import {Renderer} from "../View/Renderer";
+import {AbstractException} from "../Exceptions/AbstractException";
+import {BindingResolutionException} from "../Exceptions/BindingResolutionException";
 
 export class Genesis {
     /** @type {string} **/
@@ -122,6 +124,18 @@ export class Genesis {
         return this.#container.resolve(boundName, this, parameters);
     }
 
+    tryMake(boundName, parameters = []) {
+        try {
+            return this.make(boundName, parameters);
+        } catch (exception) {
+            if (exception instanceof BindingResolutionException) {
+                return null;
+            }
+
+            throw exception;
+        }
+    }
+
     /**
      * @returns {Promise.<Object.<string, string|number>, Error>}
      * @throws OperationNotAllowedException
@@ -134,12 +148,38 @@ export class Genesis {
                 Genesis.#instance = this;
 
                 resolve(new Bootstrapper(this).bootstrap());
-                
+
                 return;
             }
 
             reject(new OperationNotAllowedException('[GenesisUI] Instance already initialized'));
         }.bind(this));
+    }
+
+    #catchHandle(fn) {
+        try {
+            fn();
+        } catch (exception) {
+            const catchallHandler = this.tryMake('handler::catchall')
+
+            if (catchallHandler) {
+                this.#catchHandle(() => catchallHandler.handle(exception));
+                return;
+            }
+
+            if (exception instanceof AbstractException) {
+                const exceptionHandler = this.tryMake('handler::' + exception.getName());
+                if (exceptionHandler) {
+                    this.#catchHandle(() => {
+                        exceptionHandler.handle(exception);
+                    });
+
+                    return;
+                }
+            }
+
+            throw exception;
+        }
     }
 
     /**
@@ -148,25 +188,27 @@ export class Genesis {
      * @throws OperationNotAllowedException
      */
     handle(elementId) {
-        if (!this.#wasInitialized) {
-            throw new OperationNotAllowedException('[GenesisUI] Builder must be initialized before rendering');
-        }
+        this.#catchHandle(() => {
+            if (!this.#wasInitialized) {
+                throw new OperationNotAllowedException('[GenesisUI] Builder must be initialized before rendering');
+            }
 
-        this.#rootElementId = elementId;
+            this.#rootElementId = elementId;
 
-        /**
-         * @type {Router}
-         */
-        const router = this.make('app::router');
+            /**
+             * @type {Router}
+             */
+            const router = this.make('app::router');
 
-        const root = createRoot(document.getElementById(elementId));
+            const root = createRoot(document.getElementById(elementId));
 
-        const renderer = new Renderer(root);
+            const renderer = new Renderer(root);
 
-        this.bindInstance('app::renderer', renderer);
+            this.bindInstance('app::renderer', renderer);
 
-        renderer.render(router.routeUrl(window.location.href));
+            renderer.render(router.routeUrl(window.location.href));
 
-        document.dispatchEvent(new Event('gui.done'));
+            document.dispatchEvent(new Event('gui.done'));
+        });
     }
 }

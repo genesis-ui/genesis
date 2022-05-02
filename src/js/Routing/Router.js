@@ -14,7 +14,7 @@ export class Router {
     #routes = null;
 
     /**
-     * @param {?Array.<{path: string,middleware: Array,action:function|Array}>} routes
+     * @param {?Array.<{path: string,middleware: Array,action:function|Array,name:?string,domain:?string[]}>} routes
      * @throws OperationNotAllowedException
      */
     register(routes) {

@@ -20,6 +20,8 @@ import {AbstractMiddleware} from "./Routing/Middleware/AbstractMiddleware";
 import {TranslationService} from "./Services/TranslationService";
 import {Goto} from "./Routing/Goto";
 import {Response} from "./View/Responses/Response";
+import {AbstractHandler} from "./Exceptions/AbstractHandler";
+import {AbstractException} from "./Exceptions/AbstractException";
 
 const Abstract = {
     Class: AbstractClass,
@@ -30,6 +32,8 @@ const Abstract = {
     Listener: AbstractListener,
     Controller: AbstractController,
     Middleware: AbstractMiddleware,
+    ExceptionHandler: AbstractHandler,
+    Exception: AbstractException,
 };
 
 const Service = {
