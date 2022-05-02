@@ -1,9 +1,17 @@
 import {get} from "../GenesisApp";
+import {Router} from './Router';
 
 export class Goto {
+    /**
+     * @returns {Router}
+     */
+    static #getRouter() {
+        return get().make('app::router');
+    }
+
     static route(name, parameters = {}, query = {}) {
         /** @type {Router} **/
-        const router = get().make('app::router');
+        const router = this.#getRouter();
 
         const path = router.toRoute(name, parameters);
 
@@ -13,13 +21,13 @@ export class Goto {
     }
 
     static url(url) {
-        const request = get().make('app::router').routeUrl(url);
+        const request = this.#getRouter().routeUrl(url);
 
         this.#handle(request);
     }
 
     static path(path, query) {
-        const request = get().make('app::router').route(path, query);
+        const request = this.#getRouter().route(path, query);
 
         this.#handle(request);
     }
@@ -32,7 +40,7 @@ export class Goto {
         const path = state.path;
         const queryParams = state.queryParams;
 
-        const request = get().make('app::router').route(path, queryParams);
+        const request = this.#getRouter().route(path, queryParams);
 
         request.setIsHistory(true);
 
