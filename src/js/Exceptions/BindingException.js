@@ -1,4 +1,6 @@
-export class BindingException extends Error {
+import {AbstractException} from "./AbstractException";
+
+export class BindingException extends AbstractException {
     message;
     bindableName;
     name = 'BindingException';
@@ -7,5 +9,9 @@ export class BindingException extends Error {
         super(message);
 
         this.bindableName = bindableName;
+    }
+
+    getName() {
+        return this.name;
     }
 }

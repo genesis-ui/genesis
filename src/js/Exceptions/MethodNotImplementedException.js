@@ -11,4 +11,8 @@ export class MethodNotImplementedException extends Error {
         this.extendingClassName = extendingClass;
         this.methodName = method;
     }
+
+    getName() {
+        return this.name;
+    }
 }
