@@ -35,6 +35,21 @@ export class Routes {
     }
 
     /**
+     * @param {string} domain
+     * @returns {RouteGroup}
+     */
+    domain(domain) {
+        const id = this.#incrementId();
+
+        const routeGroup = new RouteGroup({});
+        routeGroup.domain(domain);
+
+        this.#factoriesAndGroups[id] = routeGroup;
+
+        return this.#factoriesAndGroups[id];
+    }
+
+    /**
      * @param {string} route
      * @param {function|Array} action
      * @returns {RouteFactory}
