@@ -5,9 +5,9 @@ import {Response} from "../Responses/Response";
 export class ExampleController extends AbstractController {
     static mapRoutes() {
         return {
-            'welcome': 'welcome',
-            'tests': 'tests',
-            'subdomain': 'subdomain'
+            '/welcome': 'welcome',
+            '/tests': 'tests',
+            '/subdomain': 'subdomain'
         };
     }
 

@@ -10,7 +10,7 @@ export class AbstractMiddleware extends AbstractClass {
     /**
      * @param {Request} request
      * @param {function} next
-     * @returns {Request|Response}
+     * @returns {Request|Response|RedirectResponse}
      * @abstract
      */
     handle(request, next) {

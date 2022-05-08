@@ -3,6 +3,7 @@ import {RuntimeException} from "../Exceptions/RuntimeException";
 import {AbstractMiddleware} from "../Routing/Middleware/AbstractMiddleware";
 import {Response} from "./Responses/Response";
 import {Request} from "../Routing/Request";
+import {RedirectResponse} from "./Responses/RedirectResponse";
 
 export class Kernel {
     /** @type {Array} **/
@@ -75,6 +76,8 @@ export class Kernel {
 
         if (response instanceof Response) {
             return response;
+        } else if (response instanceof RedirectResponse) {
+            return this.handle(response.request());
         }
 
         throw new RuntimeException('[GenesisUI] Could not render app: No response');
@@ -83,7 +86,7 @@ export class Kernel {
     #fetchResponse(middlewareArray, router, action, request) {
         const nextCallback = (index) => {
             return (request) => {
-                if (request instanceof Response) {
+                if (request instanceof Response || request instanceof RedirectResponse) {
                     return request;
                 }
 
