@@ -67,8 +67,12 @@ export class Request {
     getUrl() {
         const url = this.route().toURL();
 
-        for (const [queryKey, queryValue] of Object.entries(this.queryParams())) {
-            url.searchParams.set(queryKey, queryValue);
+        const queryParams = this.queryParams();
+
+        if (queryParams) {
+            for (const [queryKey, queryValue] of Object.entries(this.queryParams())) {
+                url.searchParams.set(queryKey, queryValue);
+            }
         }
 
         return url.toString();
