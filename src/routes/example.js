@@ -8,15 +8,9 @@ import {ExampleMiddleware} from "../js/Routing/Middleware/ExampleMiddleware";
 export default function (routes) {
     routes.middleware(ExampleMiddleware).group((routes) => {
 
-        routes.add('/', [ExampleController, 'welcome']).name('example');
-        routes.add('/tests/:prop1', [ExampleController, 'tests']).name('tests');
+        routes.add('/', [ExampleController, 'welcome']);
 
-        routes.prefix('/subdomain').domain('test.latus.local').group((routes) => {
-
-            routes.add('/only', [ExampleController, 'subdomain']).name('subdomain');
-
-            return routes;
-        });
+        routes.controller(ExampleController).name('example');
 
         return routes;
     })
