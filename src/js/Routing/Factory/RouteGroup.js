@@ -17,7 +17,7 @@ export class RouteGroup {
      * @param {?function} callback
      */
     constructor({middleware = [], prefix = null, callback = null}) {
-        this.#middleware = middleware;
+        this.#middleware = Array.isArray(middleware) ? middleware : [middleware];
         this.#prefix = prefix;
         this.#callback = callback;
         this.#domain = null;
@@ -32,7 +32,7 @@ export class RouteGroup {
             middleware = [middleware];
         }
 
-        this.#middleware = this.#middleware.concat(middleware);
+        this.#middleware.push(...middleware);
 
         return this;
     }
@@ -93,9 +93,11 @@ export class RouteGroup {
         }
 
         for (const groupRoute of routesObj.build()) {
+            middleware.push(...groupRoute.middleware);
+            
             routes.push({
                 path: prefix + groupRoute.path,
-                middleware: middleware.concat(groupRoute.middleware),
+                middleware: middleware,
                 action: groupRoute.action,
                 name: groupRoute?.name ?? null,
                 domain: this.#domain ?? groupRoute?.domain

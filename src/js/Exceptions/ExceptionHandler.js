@@ -15,22 +15,15 @@ export class ExceptionHandler extends AbstractHandler {
     handle(exception) {
         let fn;
 
-        if (!(exception instanceof AbstractException) || !(fn = this.map?.exception.getName())) {
+        if (!(exception instanceof AbstractException) || !(fn = this.map?.[exception?.getName() ?? 'unknown'])) {
             this.#unknown(exception)
         }
 
         fn(exception);
     }
 
-    /**
-     * @returns {Renderer}
-     */
-    #getRenderer() {
-        return get().make('app::renderer');
-    }
-
     #notFound() {
-        this.#getRenderer().renderComponent((
+        get().make('app::renderer').renderComponent((
             <>
                 <h1>
                     404 - Not Found
@@ -48,7 +41,7 @@ export class ExceptionHandler extends AbstractHandler {
      * @param {RuntimeException} exception
      */
     #runtime(exception) {
-        this.#getRenderer().renderComponent((
+        get().make('app::renderer').renderComponent((
             <>
                 <h1>
                     Application Error
@@ -64,7 +57,7 @@ export class ExceptionHandler extends AbstractHandler {
     }
 
     #unknown(exception) {
-        this.#getRenderer().renderComponent((
+        get().make('app::renderer').renderComponent((
             <>
                 <h1>
                     Unknown Error

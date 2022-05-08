@@ -52,9 +52,8 @@ export class Kernel {
     handle(request) {
         const router = Genesis.getInstance().make('app::router');
 
-        const middlewareArray = this.#globalMiddleware.concat(this.#requestMiddleware);
-
-        const middlewareCount = middlewareArray.length;
+        let middlewareArray = this.#globalMiddleware;
+        middlewareArray.push(...this.#requestMiddleware);
 
         let action = request.route().getAction();
 
@@ -72,39 +71,33 @@ export class Kernel {
             return action(request);
         }
 
-        let i = 0;
+        const response = this.#fetchResponse(middlewareArray, router, action, request);
 
-        for (const middlewareStaticOrString of middlewareArray) {
-            if (!(request instanceof Request)) {
-                throw new RuntimeException('[GenesisUI] Middleware may only return instances of "Request"');
-            }
-
-            const middleware = this.#buildMiddleware(middlewareStaticOrString, router);
-
-            if (i < (middlewareCount - 1)) {
-                action = middlewareArray[i].handle;
-            }
-
-            request = this.#runMiddleware(middleware, action, request);
-
-            if (request instanceof Response) {
-                return request;
-            }
-
-            i++;
+        if (response instanceof Response) {
+            return response;
         }
 
         throw new RuntimeException('[GenesisUI] Could not render app: No response');
     }
 
-    /**
-     * @param {AbstractMiddleware} middleware
-     * @param {function} next
-     * @param {Request} request
-     * @returns {*}
-     */
-    #runMiddleware(middleware, next, request) {
-        return middleware.handle(request, next);
+    #fetchResponse(middlewareArray, router, action, request) {
+        const nextCallback = (index) => {
+            return (request) => {
+                if (request instanceof Response) {
+                    return request;
+                }
+
+                const nextAction = middlewareArray?.[index + 1];
+
+                if (nextAction) {
+                    return this.#buildMiddleware(middlewareArray[index], router).handle(request, nextCallback(index + 1));
+                }
+
+                return this.#buildMiddleware(middlewareArray[index], router).handle(request, action);
+            };
+        };
+
+        return nextCallback(0)(request);
     }
 
     /**

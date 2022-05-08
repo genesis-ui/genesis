@@ -37,7 +37,7 @@ export class RouteController {
             middleware = [middleware];
         }
 
-        this.#middleware = this.#middleware.concat(middleware);
+        this.#middleware.push(...middleware);
 
         return this;
     }
