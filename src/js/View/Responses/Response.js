@@ -19,8 +19,8 @@ export class Response {
         return this.#component;
     }
 
-    redirectPath(path) {
-        return new RedirectResponse(path, true);
+    redirectPath(path, queryParams = {}) {
+        return new RedirectResponse(path, true, queryParams);
     }
 
     redirect(routeName, parameters = {}) {
