@@ -22,6 +22,9 @@ import {Goto} from "./Routing/Goto";
 import {Response} from "./View/Responses/Response";
 import {AbstractHandler} from "./Exceptions/AbstractHandler";
 import {AbstractException} from "./Exceptions/AbstractException";
+import {ConfigService} from "./Services/ConfigService";
+import {RedirectResponse} from "./View/Responses/RedirectResponse";
+import {CookieService} from "./Services/CookieService";
 
 const Abstract = {
     Class: AbstractClass,
@@ -38,6 +41,8 @@ const Abstract = {
 
 const Service = {
     Translation: TranslationService,
+    Config: ConfigService,
+    Cookie: CookieService,
 };
 
 const Model = {
