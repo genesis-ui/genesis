@@ -26,7 +26,7 @@ export class ExampleController extends AbstractController {
     tests(request) {
         return new Response(
             <div>
-                <a href="#" onClick={() => Genesis.Goto.route('example')}>Click</a>
+                <a href="#" onClick={() => Genesis.Goto.route('example.welcome')}>Click</a>
             </div>
         );
     }
