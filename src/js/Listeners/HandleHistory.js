@@ -4,13 +4,15 @@ import {Goto} from "../Routing/Goto";
 export class HandleHistory extends AbstractListener {
 
     handle(event) {
-        event.preventDefault();
+        if (event.isTrusted) {
+            event.preventDefault();
 
-        const state = event?.state ?? {
-            path: '/',
-            queryParams: {}
-        };
+            const state = event?.state ?? {
+                path: '/',
+                queryParams: {}
+            };
 
-        Goto.history(state);
+            Goto.history(state);
+        }
     }
 }
