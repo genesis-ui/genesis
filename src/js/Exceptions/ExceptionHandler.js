@@ -22,7 +22,7 @@ export class ExceptionHandler extends AbstractHandler {
         fn(exception);
     }
 
-    #notFound() {
+    #notFound(exception) {
         get().make('app::renderer').renderComponent((
             <>
                 <h1>
@@ -34,6 +34,10 @@ export class ExceptionHandler extends AbstractHandler {
                 </p>
             </>
         ));
+
+        if (exception?.path) {
+            window.location.pathname = exception.path;
+        }
     }
 
     /**
