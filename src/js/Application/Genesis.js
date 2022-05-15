@@ -56,6 +56,10 @@ export class Genesis {
         return this.#env.get(key);
     }
 
+    getEnv() {
+        return this.#env;
+    }
+
     /**
      * @returns {string}
      */
@@ -156,21 +160,32 @@ export class Genesis {
         }.bind(this));
     }
 
-    #catchHandle(fn) {
+    catchHandle(fn, unhandled = false) {
         try {
-            fn();
+            return fn();
         } catch (exception) {
+            if (unhandled) {
+                const exceptionHandler = this.tryMake('handler::unhandled');
+
+                if (exceptionHandler) {
+                    exceptionHandler.handle(exception);
+                    return;
+                }
+
+                throw exception;
+            }
+
             const catchallHandler = this.tryMake('handler::catchall')
 
             if (catchallHandler) {
-                this.#catchHandle(() => catchallHandler.handle(exception));
+                this.catchHandle(() => catchallHandler.handle(exception));
                 return;
             }
 
             if (exception instanceof AbstractException) {
                 const exceptionHandler = this.tryMake('handler::' + exception.getName());
                 if (exceptionHandler) {
-                    this.#catchHandle(() => {
+                    this.catchHandle(() => {
                         exceptionHandler.handle(exception);
                     });
 
@@ -188,7 +203,7 @@ export class Genesis {
      * @throws OperationNotAllowedException
      */
     handle(elementId) {
-        this.#catchHandle(() => {
+        this.catchHandle(() => {
             if (!this.#wasInitialized) {
                 throw new OperationNotAllowedException('[GenesisUI] Builder must be initialized before rendering');
             }

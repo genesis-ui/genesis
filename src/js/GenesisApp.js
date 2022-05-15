@@ -61,8 +61,31 @@ const Exception = {
     RuntimeException: RuntimeException,
 }
 
+/**
+ * @deprecated
+ * @returns {Genesis}
+ */
 function get() {
+    return app();
+}
+
+/**
+ * @returns {Genesis}
+ */
+function app() {
     return Genesis.getInstance();
+}
+
+function config(key) {
+    return new ConfigService().get(key);
+}
+
+function configObj(name, key = null) {
+    return new ConfigService().getObj(name, key);
+}
+
+function env(key, defaultValue = null) {
+    return app().env(key) ?? defaultValue
 }
 
 export {
@@ -75,7 +98,12 @@ export {
     Router,
     ExampleServiceProvider,
     get,
+    app,
     Goto,
     Service,
-    Response
+    Response,
+    RedirectResponse,
+    config,
+    configObj,
+    env,
 };
