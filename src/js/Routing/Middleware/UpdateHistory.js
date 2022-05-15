@@ -12,9 +12,11 @@ export class UpdateHistory extends AbstractMiddleware {
             path: path,
             queryParams: queryParams,
         };
-        
-        if (!request.isHistory()) {
-            history.pushState(state, null, url);
+
+        if (!history?.state) {
+            history.replaceState(state, '', url);
+        } else if (!request.isHistory()) {
+            history.pushState(state, '', url);
         }
 
         return next(request);

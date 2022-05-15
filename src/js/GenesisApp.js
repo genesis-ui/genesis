@@ -22,6 +22,9 @@ import {Goto} from "./Routing/Goto";
 import {Response} from "./View/Responses/Response";
 import {AbstractHandler} from "./Exceptions/AbstractHandler";
 import {AbstractException} from "./Exceptions/AbstractException";
+import {ConfigService} from "./Services/ConfigService";
+import {RedirectResponse} from "./View/Responses/RedirectResponse";
+import {CookieService} from "./Services/CookieService";
 
 const Abstract = {
     Class: AbstractClass,
@@ -38,6 +41,8 @@ const Abstract = {
 
 const Service = {
     Translation: TranslationService,
+    Config: ConfigService,
+    Cookie: CookieService,
 };
 
 const Model = {
@@ -56,8 +61,31 @@ const Exception = {
     RuntimeException: RuntimeException,
 }
 
+/**
+ * @deprecated
+ * @returns {Genesis}
+ */
 function get() {
+    return app();
+}
+
+/**
+ * @returns {Genesis}
+ */
+function app() {
     return Genesis.getInstance();
+}
+
+function config(key) {
+    return new ConfigService().get(key);
+}
+
+function configObj(name, key = null) {
+    return new ConfigService().getObj(name, key);
+}
+
+function env(key, defaultValue = null) {
+    return app().env(key) ?? defaultValue
 }
 
 export {
@@ -70,7 +98,12 @@ export {
     Router,
     ExampleServiceProvider,
     get,
+    app,
     Goto,
     Service,
-    Response
+    Response,
+    RedirectResponse,
+    config,
+    configObj,
+    env,
 };

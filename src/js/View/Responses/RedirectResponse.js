@@ -29,7 +29,7 @@ export class RedirectResponse {
         const router = get().make('app::router');
 
         if (this.#redirectsToPath) {
-            return router.route(this.#routeNameOrPath);
+            return router.route(this.#routeNameOrPath, this.#parameters);
         }
 
         return router.route(router.toRoute(this.#routeNameOrPath, this.#parameters));

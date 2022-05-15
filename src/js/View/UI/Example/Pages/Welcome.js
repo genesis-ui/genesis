@@ -9,7 +9,7 @@ export class Welcome extends React.Component {
                     Welcome to an example.
                     <a href="#" onClick={(e) => {
                         e.preventDefault();
-                        Genesis.Goto.route('tests', {prop1: 'works'})
+                        Genesis.Goto.route('example.tests', {prop1: 'works'})
                     }}>Click</a>
                 </ExampleLayout>
             </React.StrictMode>

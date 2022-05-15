@@ -1,9 +1,9 @@
-import {Genesis} from "../Application/Genesis";
 import {RuntimeException} from "../Exceptions/RuntimeException";
 import {AbstractMiddleware} from "../Routing/Middleware/AbstractMiddleware";
 import {Response} from "./Responses/Response";
 import {Request} from "../Routing/Request";
 import {RedirectResponse} from "./Responses/RedirectResponse";
+import {app} from "../GenesisApp";
 
 export class Kernel {
     /** @type {Array} **/
@@ -51,9 +51,10 @@ export class Kernel {
      * @returns {Response}
      */
     handle(request) {
-        const router = Genesis.getInstance().make('app::router');
+        const router = app().make('app::router');
 
-        let middlewareArray = this.#globalMiddleware;
+        let middlewareArray = [...this.#globalMiddleware];
+
         middlewareArray.push(...this.#requestMiddleware);
 
         let action = request.route().getAction();
