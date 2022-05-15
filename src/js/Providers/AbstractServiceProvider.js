@@ -1,6 +1,7 @@
 import {AbstractClass} from "../Abstract/AbstractClass";
 import {TranslationService} from "../Services/TranslationService";
 import {RouteService} from "../Services/RouteService";
+import {ConfigService} from "../Services/ConfigService";
 
 const namespace = 'GenesisUI::Providers';
 
@@ -70,7 +71,7 @@ export class AbstractServiceProvider extends AbstractClass {
     }
 
     /**
-     * @param {callback} routes
+     * @param {Function} routes
      * @returns this
      */
     loadRoutes(routes) {
@@ -87,6 +88,19 @@ export class AbstractServiceProvider extends AbstractClass {
      */
     attachGlobalMiddleware(middleware) {
         this._app.make('app::view-kernel').attachGlobalMiddleware(middleware);
+
+        return this;
+    }
+
+    /**
+     * @param {string} name
+     * @param {Function} config
+     * @returns {AbstractServiceProvider}
+     */
+    loadConfig(name, config) {
+        const configService = new ConfigService();
+
+        configService.add(name, config(this._app.getEnv()));
 
         return this;
     }
