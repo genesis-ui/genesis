@@ -1,5 +1,6 @@
 import {ReactElement} from "react";
 import {RedirectResponse} from "./RedirectResponse";
+import {AbortResponse} from "./AbortResponse";
 
 export class Response {
     /** @type {React.Component|ReactElement} **/
@@ -25,5 +26,9 @@ export class Response {
 
     redirect(routeName, parameters = {}) {
         return new RedirectResponse(routeName, false, parameters);
+    }
+
+    abort(callback) {
+        return new AbortResponse(callback);
     }
 }

@@ -25,6 +25,7 @@ import {AbstractException} from "./Exceptions/AbstractException";
 import {ConfigService} from "./Services/ConfigService";
 import {RedirectResponse} from "./View/Responses/RedirectResponse";
 import {CookieService} from "./Services/CookieService";
+import {AbortResponse} from "./View/Responses/AbortResponse";
 
 const Abstract = {
     Class: AbstractClass,
@@ -103,6 +104,7 @@ export {
     Service,
     Response,
     RedirectResponse,
+    AbortResponse,
     config,
     configObj,
     env,
