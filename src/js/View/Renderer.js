@@ -1,4 +1,5 @@
 import {get} from "../GenesisApp";
+import {AbortResponse} from "./Responses/AbortResponse";
 
 export class Renderer {
     #root;
@@ -8,7 +9,15 @@ export class Renderer {
     }
 
     render(request) {
-        this.#root.render(get().make('app::view-kernel').handle(request).getComponent());
+        const response = get().make('app::view-kernel').handle(request);
+
+        if (response instanceof AbortResponse) {
+            response.callback(request);
+
+            return;
+        }
+
+        this.#root.render(response.getComponent());
     }
 
     renderComponent(componentOrJSX) {

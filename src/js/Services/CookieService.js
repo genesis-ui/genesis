@@ -25,9 +25,9 @@ export class CookieService {
     }
 
     get(name) {
-        const value = this.all()?.[name];
+        const value = this.all()?.[name] ?? null;
 
-        return decodeURIComponent(value);
+        return value !== null ? decodeURIComponent(value) : null;
     }
 
     put(name, value, expiresAt) {

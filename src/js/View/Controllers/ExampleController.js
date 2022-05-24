@@ -1,13 +1,15 @@
 import {AbstractController} from "./AbstractController";
 import {Welcome} from "../UI/Example/Pages/Welcome";
 import {Response} from "../Responses/Response";
+import {CookieService} from "../../Services/CookieService";
 
 export class ExampleController extends AbstractController {
     static mapRoutes() {
         return {
             '/welcome': 'welcome',
             '/tests': 'tests',
-            '/subdomain': 'subdomain'
+            '/subdomain': 'subdomain',
+            '/cookieconsent': 'cookieConsent'
         };
     }
 
@@ -39,6 +41,22 @@ export class ExampleController extends AbstractController {
         return new Response(
             <div>
                 This route only works on the 'test.latus.local' subdomain
+            </div>
+        );
+    }
+
+    cookieConsent(request) {
+        const cookieService = new CookieService();
+
+        if (!cookieService.exists('genesis.opted-in')) {
+            return new Response().abort(() => {
+                alert('You have to consent to cookies!');
+            });
+        }
+
+        return new Response(
+            <div>
+                You have consented to cookies!
             </div>
         );
     }
