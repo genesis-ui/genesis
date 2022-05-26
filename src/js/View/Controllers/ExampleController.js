@@ -1,7 +1,7 @@
 import {AbstractController} from "./AbstractController";
 import {Welcome} from "../UI/Example/Pages/Welcome";
 import {Response} from "../Responses/Response";
-import {CookieService} from "../../Services/CookieService";
+import {CookieConsentService} from "../../Services/CookieConsentService";
 
 export class ExampleController extends AbstractController {
     static mapRoutes() {
@@ -46,9 +46,9 @@ export class ExampleController extends AbstractController {
     }
 
     cookieConsent(request) {
-        const cookieService = new CookieService();
+        const consentService = new CookieConsentService();
 
-        if (!cookieService.exists('genesis.opted-in')) {
+        if (consentService.hasUserGivenConsent('example')) {
             return new Response().abort(() => {
                 alert('You have to consent to cookies!');
             });

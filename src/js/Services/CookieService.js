@@ -1,5 +1,4 @@
 import {config} from "../GenesisApp";
-import {OperationNotAllowedException} from "../Exceptions/OperationNotAllowedException";
 
 export class CookieService {
     #getDecodedStrings() {
@@ -30,22 +29,20 @@ export class CookieService {
         return value !== null ? decodeURIComponent(value) : null;
     }
 
-    put(name, value, expiresAt) {
-        if (this.exists('genesis.opted-in') || config('cookies.requireOptIn') === false) {
-            let dateString = expiresAt.toUTCString();
-
-            let cookieString = (name + '=' + encodeURIComponent(value) + '; expires=' + dateString + '; path=/;');
-
-            if (config('cookies.secure')) {
-                cookieString += ' secure';
-            }
-
-            document.cookie = cookieString;
-
-            return;
+    put(name, value, expiresAt = null) {
+        if (!expiresAt) {
+            expiresAt = new Date('now + 1 year');
         }
 
-        throw new OperationNotAllowedException('[GenesisUI] ');
+        let dateString = expiresAt.toUTCString();
+
+        let cookieString = (name + '=' + encodeURIComponent(value) + '; expires=' + dateString + '; path=/;');
+
+        if (config('cookies.secure')) {
+            cookieString += ' secure';
+        }
+
+        document.cookie = cookieString;
     }
 
     delete(name) {

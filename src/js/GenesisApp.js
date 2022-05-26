@@ -26,6 +26,7 @@ import {ConfigService} from "./Services/ConfigService";
 import {RedirectResponse} from "./View/Responses/RedirectResponse";
 import {CookieService} from "./Services/CookieService";
 import {AbortResponse} from "./View/Responses/AbortResponse";
+import {CookieConsentService} from "./Services/CookieConsentService";
 
 const Abstract = {
     Class: AbstractClass,
@@ -44,6 +45,7 @@ const Service = {
     Translation: TranslationService,
     Config: ConfigService,
     Cookie: CookieService,
+    CookieConsent: CookieConsentService,
 };
 
 const Model = {
