@@ -5,13 +5,11 @@ export class ConfigService {
     static #keyedConfig = {};
 
     add(name, config) {
-        if (ConfigService.#config?.[name] === null) {
-            ConfigService.#config[name] = {};
-        }
+        let configObj = ConfigService.#config?.[name] ?? {};
 
-        ConfigService.#config[name] = Utility.merge(ConfigService.#config[name], config);
+        configObj = Utility.merge(configObj, config);
 
-        for (const [key, value] of Object.entries(ConfigService.#config[name])) {
+        for (const [key, value] of Object.entries(configObj)) {
             ConfigService.#keyedConfig[name + '.' + key] = value;
         }
     }
@@ -21,7 +19,7 @@ export class ConfigService {
     }
 
     getObj(name, key = null) {
-        if (ConfigService?.#config[name] === null) {
+        if (!ConfigService?.#config[name]) {
             return null;
         }
 
