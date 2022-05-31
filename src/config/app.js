@@ -1,4 +1,7 @@
 /** @param {Env} env **/
 export default (env) => {
-    return {};
+    return {
+        name: env.get('name') ?? 'Genesis Website',
+        domain: env.get('domain') ?? 'localhost',
+    };
 };
