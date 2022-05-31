@@ -1,4 +1,4 @@
-import {app} from "../GenesisApp";
+import {gns} from "../GenesisApp";
 import {Router} from './Router';
 
 export class Goto {
@@ -6,7 +6,7 @@ export class Goto {
      * @returns {Router}
      */
     static #getRouter() {
-        return app().make('app::router');
+        return gns().make('app::router');
     }
 
     static route(name, parameters = {}, query = {}) {
@@ -15,7 +15,7 @@ export class Goto {
 
         const path = router.toRoute(name, parameters);
 
-        app().catchHandle(() => {
+        gns().catchHandle(() => {
             const request = router.route(path, query);
 
             this.#handle(request);
@@ -23,7 +23,7 @@ export class Goto {
     }
 
     static url(url) {
-        app().catchHandle(() => {
+        gns().catchHandle(() => {
             const request = this.#getRouter().routeUrl(url);
 
             this.#handle(request);
@@ -31,7 +31,7 @@ export class Goto {
     }
 
     static path(path, query) {
-        app().catchHandle(() => {
+        gns().catchHandle(() => {
             const request = this.#getRouter().route(path, query);
 
             this.#handle(request);
@@ -39,14 +39,14 @@ export class Goto {
     }
 
     static #handle(request) {
-        app().make('app::renderer').render(request);
+        gns().make('app::renderer').render(request);
     }
 
     static history(state) {
         const path = state.path;
         const queryParams = state.queryParams;
 
-        app().catchHandle(() => {
+        gns().catchHandle(() => {
             const request = this.#getRouter().route(path, queryParams);
 
             request.setIsHistory(true);

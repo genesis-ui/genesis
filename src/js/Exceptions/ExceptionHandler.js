@@ -1,6 +1,6 @@
 import {AbstractHandler} from "./AbstractHandler";
 import {AbstractException} from "./AbstractException";
-import {get} from "../GenesisApp";
+import {gns} from "../GenesisApp";
 
 export class ExceptionHandler extends AbstractHandler {
     map = {
@@ -23,7 +23,7 @@ export class ExceptionHandler extends AbstractHandler {
     }
 
     #notFound(exception) {
-        get().make('app::renderer').renderComponent((
+        gns().make('app::renderer').renderComponent((
             <>
                 <h1>
                     404 - Not Found
@@ -45,7 +45,7 @@ export class ExceptionHandler extends AbstractHandler {
      * @param {RuntimeException} exception
      */
     #runtime(exception) {
-        get().make('app::renderer').renderComponent((
+        gns().make('app::renderer').renderComponent((
             <>
                 <h1>
                     Application Error
@@ -61,7 +61,7 @@ export class ExceptionHandler extends AbstractHandler {
     }
 
     #unknown(exception) {
-        get().make('app::renderer').renderComponent((
+        gns().make('app::renderer').renderComponent((
             <>
                 <h1>
                     Unknown Error

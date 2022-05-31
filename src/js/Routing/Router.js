@@ -3,7 +3,7 @@ import {RouteNotFoundException} from "../Exceptions/RouteNotFoundException";
 import {compile, match} from "path-to-regexp";
 import {Route} from "./Route";
 import {Request} from "./Request";
-import {app} from "../GenesisApp";
+import {gns} from "../GenesisApp";
 
 export class Router {
     /** @type {Object.<string, function|AbstractMiddleware>} **/
@@ -109,7 +109,7 @@ export class Router {
      * @returns {Request}
      */
     route(path, query = null) {
-        const kernel = app().make('app::view-kernel');
+        const kernel = gns().make('app::view-kernel');
 
         kernel.flush();
 
