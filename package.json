@@ -1,6 +1,6 @@
 {
   "name": "genesis-ui-app",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A modern approach at the MVC-pattern in JavaScript",
   "main": "index.js",
   "scripts": {
