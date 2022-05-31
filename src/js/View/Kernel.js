@@ -3,7 +3,7 @@ import {AbstractMiddleware} from "../Routing/Middleware/AbstractMiddleware";
 import {Response} from "./Responses/Response";
 import {Request} from "../Routing/Request";
 import {RedirectResponse} from "./Responses/RedirectResponse";
-import {app} from "../GenesisApp";
+import {gns} from "../GenesisApp";
 import {AbortResponse} from "./Responses/AbortResponse";
 
 export class Kernel {
@@ -52,7 +52,7 @@ export class Kernel {
      * @returns {Response}
      */
     handle(request) {
-        const router = app().make('app::router');
+        const router = gns().make('app::router');
 
         let middlewareArray = [...this.#globalMiddleware];
 

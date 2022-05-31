@@ -1,4 +1,4 @@
-import {get} from "../GenesisApp";
+import {gns} from "../GenesisApp";
 import {AbortResponse} from "./Responses/AbortResponse";
 
 export class Renderer {
@@ -9,7 +9,7 @@ export class Renderer {
     }
 
     render(request) {
-        const response = get().make('app::view-kernel').handle(request);
+        const response = gns().make('app::view-kernel').handle(request);
 
         if (response instanceof AbortResponse) {
             response.callback(request);

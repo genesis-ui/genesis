@@ -1,4 +1,4 @@
-import {get} from "../../GenesisApp";
+import {gns} from "../../GenesisApp";
 import {Router} from "../../GenesisApp";
 
 export class RedirectResponse {
@@ -26,7 +26,7 @@ export class RedirectResponse {
 
     request() {
         /** @type {Router} **/
-        const router = get().make('app::router');
+        const router = gns().make('app::router');
 
         if (this.#redirectsToPath) {
             return router.route(this.#routeNameOrPath, this.#parameters);

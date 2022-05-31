@@ -2,6 +2,7 @@ import {AbstractController} from "./AbstractController";
 import {Welcome} from "../UI/Example/Pages/Welcome";
 import {Response} from "../Responses/Response";
 import {CookieConsentService} from "../../Services/CookieConsentService";
+import {Goto} from "../../Routing/Goto";
 
 export class ExampleController extends AbstractController {
     static mapRoutes() {
@@ -28,7 +29,7 @@ export class ExampleController extends AbstractController {
     tests(request) {
         return new Response(
             <div>
-                <a href="#" onClick={() => Genesis.Goto.route('example.welcome')}>Click</a>
+                <a href="#" onClick={() => Goto.route('example.welcome')}>Click</a>
             </div>
         );
     }
