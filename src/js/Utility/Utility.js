@@ -1,15 +1,20 @@
 export class Utility {
-    static merge(obj1, obj2) {
-        if (obj1) {
-            for (const key of Object.keys(obj2)) {
-                if (!obj1.hasOwnProperty(key) || typeof obj2[key] !== 'object') {
-                    obj1[key] = obj2[key];
-                } else {
-                    this.merge(obj1[key], obj2[key]);
+    static merge(firstObject, secondObject) {
+        if (firstObject && secondObject) {
+            for (const key of Object.keys(secondObject)) {
+                const firstObjectEntry = firstObject?.[key] ?? null;
+                const secondObjectEntry = secondObject[key];
+
+                if (!firstObjectEntry) {
+                    firstObject[key] = secondObjectEntry;
+                } else if (typeof firstObjectEntry === 'object' && typeof secondObjectEntry === 'object') {
+                    firstObject[key] = this.merge(firstObjectEntry, secondObjectEntry);
                 }
             }
+
+            return firstObject;
         }
 
-        return obj1;
+        return firstObject ?? secondObject ?? null;
     }
 }
