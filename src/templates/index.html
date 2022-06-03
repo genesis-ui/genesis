@@ -12,9 +12,9 @@
     <script type="module">
         window.addEventListener('load', function () {
             /** @type {Genesis} genesisApp **/
-            const genesisApp = new window.Genesis.App({});
+            const genesisApp = new window.Genesis.App.Application.Genesis({});
 
-            genesisApp.register([window.Genesis.ExampleServiceProvider]);
+            genesisApp.register([window.Genesis.App.Providers.ExampleServiceProvider]);
 
             genesisApp.init();
 
