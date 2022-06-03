@@ -7,7 +7,7 @@ module.exports = (env) => {
     let exports = {
         mode: mode,
         entry: {
-            'genesis': './src/js/GenesisApp.js',
+            'genesis': './src/js/declaredNamespaces.js',
         },
         plugins: [],
         output: {
