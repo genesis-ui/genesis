@@ -5,6 +5,7 @@ import {Routes} from "../Routing/Factory/Routes";
 import {RouteService} from "../Services/RouteService";
 import {RuntimeException} from "../Exceptions/RuntimeException";
 import {EventServiceProvider} from "../Providers/EventServiceProvider";
+import {ConfigServiceProvider} from "../Providers/ConfigServiceProvider";
 
 export class Bootstrapper {
     /** @type {Genesis} **/
@@ -23,7 +24,7 @@ export class Bootstrapper {
      * @type {AbstractServiceProvider[]}
      */
     #baseProviders = [
-        TranslationServiceProvider, RouteServiceProvider, EventServiceProvider
+        TranslationServiceProvider, RouteServiceProvider, EventServiceProvider, ConfigServiceProvider
     ];
 
     /**
