@@ -14,6 +14,10 @@ export class ConfigService {
         }
     }
 
+    getAll() {
+        return ConfigService.#config;
+    }
+
     get(key) {
         return ConfigService.#keyedConfig?.[key];
     }
