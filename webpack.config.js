@@ -15,6 +15,7 @@ module.exports = (env) => {
             filename: 'genesis-ui.js',
             publicPath: '/'
         },
+        externalsType: 'window',
         externals: {
             'react': 'react',
             'react-dom': 'reactdom',
