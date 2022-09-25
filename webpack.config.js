@@ -20,8 +20,8 @@ module.exports = (env) => {
             publicPath: '/'
         },
         externals: {
-            'react': 'React',
-            'react-dom': 'ReactDOM',
+            'react': 'react',
+            'react-dom': 'react-dom',
         },
         resolve: {
             extensions: ['.js']
