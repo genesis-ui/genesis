@@ -1,20 +1,18 @@
-import {Container} from "./Container/Container";
-import {RuntimeException} from "../Exceptions/RuntimeException";
-import {AbstractServiceProvider} from "../Providers/AbstractServiceProvider";
-import {ServiceProviderService} from "../Services/ServiceProviderService";
-import {OperationNotAllowedException} from "../Exceptions/OperationNotAllowedException";
-import {Bootstrapper} from "./Bootstrapper";
-import {createRoot} from "react-dom/client";
-import {Env} from "../Models/Env";
-import {Renderer} from "../View/Renderer";
-import {AbstractException} from "../Exceptions/AbstractException";
-import {BindingResolutionException} from "../Exceptions/BindingResolutionException";
+import {Container} from './Container/Container';
+import {RuntimeException} from '../Exceptions/RuntimeException';
+import {AbstractServiceProvider} from '../Providers/AbstractServiceProvider';
+import {ServiceProviderService} from '../Services/ServiceProviderService';
+import {OperationNotAllowedException} from '../Exceptions/OperationNotAllowedException';
+import {Bootstrapper} from './Bootstrapper';
+import {createRoot} from 'react-dom/client';
+import {Env} from '../Models/Env';
+import {Renderer} from '../View/Renderer';
+import {AbstractException} from '../Exceptions/AbstractException';
+import {BindingResolutionException} from '../Exceptions/BindingResolutionException';
 
 export class Genesis {
     /** @type {string} **/
     static VERSION = 'v0.0.1';
-    /** @type {number} **/
-    static REACT_VERSION = 18;
 
     /** @type {Genesis} **/
     static #instance;
