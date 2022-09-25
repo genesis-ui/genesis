@@ -6,7 +6,6 @@ import {Container} from './Application/Container/Container';
 import {Resolvable} from './Application/Container/Resolvable';
 import {Bootstrapper} from './Application/Bootstrapper';
 import {Genesis} from './Application/Genesis';
-import ReactVersion from './Compliance/ReactVersion';
 import {AbstractException} from './Exceptions/AbstractException';
 import {AbstractHandler} from './Exceptions/AbstractHandler';
 import {BindingException} from './Exceptions/BindingException';
@@ -71,10 +70,6 @@ exports.Application = {
     },
     Bootstrapper,
     Genesis,
-};
-
-exports.Compliance = {
-    ReactVersion,
 };
 
 exports.Exceptions = {
