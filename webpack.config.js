@@ -13,10 +13,6 @@ module.exports = (env) => {
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: 'genesis-ui.js',
-            library: {
-                name: 'Genesis',
-                type: 'umd'
-            },
             publicPath: '/'
         },
         externals: {

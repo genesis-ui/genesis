@@ -1,8 +1,14 @@
 {
   "name": "genesis-ui-app",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "A modern approach at the MVC-pattern in JavaScript",
   "main": "index.js",
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production",
