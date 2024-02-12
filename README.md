@@ -4,7 +4,7 @@
 
 ![GitHub](https://img.shields.io/github/license/genesis-ui/genesis) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/genesis-ui/genesis)
 
-![Maintained](https://img.shields.io/badge/maintained-yes-green) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/genesis-ui/genesis)
+![Maintained](https://img.shields.io/badge/maintained-no-red) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/genesis-ui/genesis)
 
 #### A friendly warning
 
